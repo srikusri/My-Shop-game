@@ -35,10 +35,13 @@ jobs:
       - name: Build for GitHub Pages
         run: npm run build:gh-pages
       
+      - name: Copy index.html to 404.html for GitHub Pages routing
+        run: cp ./dist/inventory-spa/browser/index.html ./dist/inventory-spa/browser/404.html
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/inventory-spa
+          path: ./dist/inventory-spa/browser
 
   deploy:
     environment:
