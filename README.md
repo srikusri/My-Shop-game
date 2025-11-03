@@ -1,12 +1,20 @@
-# 🏪 Kids Store Manager - Learn & Play! 🎮
+# 🏪 My Shop Game - Learn Math & Business! 🎮
 
-**🎉 NEW: This has been transformed into an educational kids game!**
+**🎉 Educational Store Management Game for Kids!**
 
-A super fun, educational game where kids learn to manage their own store! With leveling up, achievements, coins, and colorful animations - learning has never been this fun!
+A super fun, educational game where kids learn to manage their own store with real-world concepts! Features wallet management, QR payments, math challenges, and multi-currency support. Learning has never been this engaging!
 
-> 📚 **Looking for the original business version?** Check the git history or see the technical documentation below.
+> 💡 **Latest Features**: Wallet system with buyer/seller roles, math challenges to earn money, QR code payments, and 20 currency options!
 
 ## 🎮 Game Features
+
+### 💰 Wallet & Money Management (NEW!)
+- 👤 **Choose Your Role**: Be a Seller or Buyer!
+- 💵 **Digital Wallet**: Track your money in real-time
+- 🧮 **Math Challenges**: Solve problems to earn money (no free money!)
+- 💱 **20 Currencies**: Choose from USD, EUR, GBP, INR, JPY, and more!
+- 📊 **Transaction History**: See all your earnings and spending
+- 💳 **QR Payments**: Scan QR codes to pay or receive money
 
 ### Learn While Playing!
 - 🌟 **Level Up System**: Start at level 1 and grow!
@@ -28,9 +36,13 @@ A super fun, educational game where kids learn to manage their own store! With l
 
 ### Sell Items Mode (Learning Sales) 💰
 - 🛒 **Scan to Sell**: Add items to shopping cart
+- 🔄 **Two Scan Modes**: Single-scan (one at a time) or Quantity mode (bulk)
+- 📷 **Auto-Close Camera**: Camera closes after successful scan in single mode
 - 🔢 **Count Quantity**: How many to sell?
 - ➕ **Math Practice**: Add up totals
-- ✅ **Checkout**: Complete the sale
+- 💳 **QR Checkout**: Generate QR code for payments
+- ✅ **Manual Confirmation**: Seller confirms payment received
+- 📊 **Sales History**: View all past sales with details
 - 🪙 **Earn Coins**: Virtual currency rewards
 - 📄 **Print Receipts**: See the sale summary
 
@@ -91,7 +103,24 @@ npm run deploy
 
 ## 🎮 How to Play
 
-### Mode 1: Add Items 📦
+### Getting Started
+
+1. **Choose Your Role**: Click "I'm a Seller" or "I'm a Buyer"
+2. **Enter Your Name**: Type your name and click "Start"
+3. **Welcome!**: You're now in the game!
+
+### 💰 Managing Your Wallet
+
+1. **View Balance**: Click the "WALLET" button in the header
+2. **Add Money**: 
+   - Click quick amount buttons (₹10, ₹20, ₹50, ₹100)
+   - Or enter a custom amount
+   - **Solve the math problem** to earn money! 🧮
+   - No free money - learn by solving!
+3. **View History**: See all your transactions in the wallet modal
+4. **Change Currency**: Go to Settings ⚙️ → Select from 20 currencies
+
+### 📦 Mode 1: Add Items (Sellers)
 
 1. Click "📦 Add Items"
 2. Click "📷 Scan Item" or "⌨️ Type Code"
@@ -100,28 +129,72 @@ npm run deploy
 5. Click "Add Item"
 6. **🌟 You earn XP and points!**
 
-### Mode 2: Sell Items 💰
+### 💰 Mode 2: Sell Items (Sellers)
 
 1. Click "💰 Sell Items"
-2. Scan items to add to cart
-3. Adjust quantities if needed
-4. Click "✅ Checkout"
-5. Click "Complete Sale"
-6. **🪙 You earn coins!**
+2. **Choose Scan Mode**:
+   - **One at a Time**: Scans one item per scan (camera closes automatically)
+   - **Quantity Mode**: Set quantity, scan once to add multiple
+3. Scan items to add to cart
+4. Adjust quantities if needed
+5. Click "✅ Checkout"
+6. **QR Payment**:
+   - QR code is displayed
+   - Buyer can scan with their device (if using app)
+   - Or accept cash payment
+   - Click **"✓ Confirm Payment Received"**
+7. **🪙 Money added to wallet!**
+
+### 📊 Track Your Sales
+
+- Click **"📊 Sales History"** button (sellers only)
+- View all past sales with details
+- See total sales, today's sales, this week's sales
+- Filter by All, Today, or This Week
+- Delete individual sales if needed
 
 ### Check Your Progress 📊
 
-- **Top Bar**: Level, coins, score, streak
-- **Achievements**: Click 🏆 button
-- **XP Bar**: Shows progress to next level
+- **Header**: Wallet balance, Add Items, Sell Items buttons
+- **Footer**: Persona info, Level, coins, score, Achievements, Sales History
+- **Achievements**: Click 🏆 button to see unlocked achievements
 
 ## 🎓 What Kids Learn
 
-- ➕ **Math**: Addition, subtraction, multiplication
-- 📖 **Reading**: Following instructions
-- 🎯 **Problem Solving**: Inventory management
-- 💼 **Life Skills**: Running a business
-- 💻 **Technology**: Using apps and scanning
+- ➕ **Math**: Addition, subtraction, multiplication (through challenges!)
+- 💰 **Money Management**: Earning, spending, tracking finances
+- 🌍 **World Currencies**: Learn about different countries' money
+- 📖 **Reading**: Following instructions and understanding concepts
+- 🎯 **Problem Solving**: Inventory management and decision making
+- 💼 **Business Skills**: Running a store, managing sales
+- 💻 **Technology**: Using apps, scanning, QR codes
+- 🤝 **Buyer/Seller Roles**: Understanding different perspectives
+
+## 💱 Supported Currencies (20 Options!)
+
+Choose your preferred currency in Settings:
+- 🇺🇸 USD (US Dollar) - $
+- 🇪🇺 EUR (Euro) - €
+- 🇬🇧 GBP (British Pound) - £
+- 🇮🇳 **INR (Indian Rupee) - ₹** (Default)
+- 🇯🇵 JPY (Japanese Yen) - ¥
+- 🇨🇳 CNY (Chinese Yuan) - ¥
+- 🇦🇺 AUD (Australian Dollar) - A$
+- 🇨🇦 CAD (Canadian Dollar) - C$
+- 🇨🇭 CHF (Swiss Franc) - Fr
+- 🇸🇪 SEK (Swedish Krona) - kr
+- 🇳🇿 NZD (New Zealand Dollar) - NZ$
+- 🇸🇬 SGD (Singapore Dollar) - S$
+- 🇭🇰 HKD (Hong Kong Dollar) - HK$
+- 🇰🇷 KRW (South Korean Won) - ₩
+- 🇲🇽 MXN (Mexican Peso) - Mex$
+- 🇧🇷 BRL (Brazilian Real) - R$
+- 🇿🇦 ZAR (South African Rand) - R
+- 🇦🇪 AED (UAE Dirham) - د.إ
+- 🇸🇦 SAR (Saudi Riyal) - ر.س
+- 🇹🇷 TRY (Turkish Lira) - ₺
+
+All prices, wallet balances, and transactions display in your selected currency!
 
 ## 📚 Documentation
 
@@ -134,28 +207,53 @@ npm run deploy
 ## 🏗️ Architecture
 
 ### Components
-- **AppComponent**: Main application shell with mode switching
+- **AppComponent**: Main application shell with mode switching and wallet display
+- **PersonaSelectionComponent**: Role selection (Seller/Buyer) with name input
+- **WalletDisplayComponent**: Wallet button, modal, transaction history, math challenges
 - **InventoryManagementComponent**: Handles inventory operations
-- **SalesComponent**: Manages point-of-sale functionality
+- **SalesComponent**: Point-of-sale with scanning modes and QR payments
+- **SalesHistoryComponent**: View and manage sales history
+- **QrPaymentComponent**: Generate QR codes for payments (seller side)
+- **QrScannerPaymentComponent**: Scan QR codes to pay (buyer side)
+- **AchievementsComponent**: Display unlocked achievements
+- **SettingsComponent**: Currency selection and store reset
+- **ToastComponent**: Notification system
 
 ### Services
+- **WalletService**: Manages personas, wallet balance, transactions, payments
+- **CurrencyService**: Handles currency selection and formatting (20 currencies)
 - **StorageService**: Handles LocalStorage operations
 - **InventoryService**: Manages inventory state and operations
 - **CartService**: Manages shopping cart and sales
+- **SalesHistoryService**: Persists and retrieves sales records
+- **GameService**: Leveling, XP, coins, achievements, themes
+- **SoundService**: Sound effects for actions
+- **ToastService**: Notification management
 
 ### Models
 - **InventoryItem**: Item data structure
 - **CartItem**: Cart item with quantity
 - **Sale**: Completed sale record
+- **Persona**: User role (Seller/Buyer) with wallet
+- **Wallet**: Balance and transaction history
+- **WalletTransaction**: Individual transaction record
+- **PaymentRequest**: QR payment request data
+- **Currency**: Currency definition with symbol and position
+
+### Pipes
+- **CurrencyFormatPipe**: Formats numbers with selected currency symbol
 
 ## 🎨 Technologies
 
 - **Angular 18+**: Modern framework with signals and standalone components
-- **BMC UX Components**: Enterprise-grade UI components
-- **ZXing**: Barcode/QR code scanning library
-- **TypeScript**: Type-safe development
-- **SCSS**: Advanced styling
+- **ZXing (@zxing/ngx-scanner)**: Barcode/QR code scanning library
+- **QRCode (qrcode)**: QR code generation for payments
+- **TypeScript**: Type-safe development with strict mode
+- **SCSS**: Advanced styling with custom components
 - **LocalStorage API**: Client-side data persistence
+- **PWA**: Progressive Web App with service worker for offline support
+- **Signals**: Reactive state management with Angular signals
+- **Standalone Components**: Modern Angular architecture
 
 ## 🔧 Development
 
@@ -230,12 +328,25 @@ For questions or support, please open an issue on the repository.
 
 ## 🎯 Quick Tips
 
-1. 🔥 Play daily for streak bonuses
-2. 🏆 Check achievements often
-3. 🪙 Save coins for themes
-4. 📊 Watch your XP bar
-5. 🎵 Turn on sound for more fun!
-6. ⚙️ Use Settings to reset your store if needed
+1. 👤 **Start Right**: Choose Seller to run a store, Buyer to shop!
+2. 🧮 **Practice Math**: Solve problems to earn wallet money - great for learning!
+3. 💱 **Try Currencies**: Explore different world currencies in Settings
+4. 📷 **Use Single-Scan**: In Sell mode, camera auto-closes after each scan
+5. 📊 **Track Sales**: Check Sales History to see your business progress
+6. 💰 **Manage Wallet**: View transaction history to understand money flow
+7. 🔥 **Daily Streaks**: Play every day for bonus coins and XP
+8. 🏆 **Unlock All**: Try to unlock all 8 achievements
+9. 🎵 **Sound On**: Turn on sound effects for more fun!
+10. 🔄 **Switch Roles**: Use wallet modal to switch between Seller and Buyer
+
+## 💡 Pro Tips for Parents & Teachers
+
+- **Math Skills**: The math challenges adapt to different skill levels (1-20 range)
+- **Currency Learning**: Great way to teach kids about international currencies
+- **Role Playing**: Switching between Seller/Buyer helps understand different perspectives
+- **Money Management**: Wallet system teaches financial responsibility
+- **Record Keeping**: Sales History shows the importance of tracking transactions
+- **QR Codes**: Introduces modern payment technology concepts
 
 ---
 
