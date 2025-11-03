@@ -62,5 +62,9 @@ export class AppComponent {
     this.showQRScanner.set(false);
     // Payment completed, buyer has paid
   }
+
+  getTotalPurchases(): number {
+    return this.walletService.transactions().filter(t => t.type === 'debit').length;
+  }
 }
 

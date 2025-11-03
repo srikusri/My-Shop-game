@@ -54,7 +54,7 @@ import { CurrencyFormatPipe } from '../../pipes/currency-format.pipe';
                     <button 
                       class="btn btn-success"
                       (click)="loadCustomAmount()"
-                      [disabled]="!customAmount() || customAmount() <= 0">
+                      [disabled]="!customAmount() || (customAmount() ?? 0) <= 0">
                       Load Money
                     </button>
                   </div>

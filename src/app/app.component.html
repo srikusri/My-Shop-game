@@ -90,7 +90,7 @@
                 <div class="stat-icon">🛍️</div>
                 <div class="stat-content">
                   <div class="stat-label">Total Purchases</div>
-                  <div class="stat-value">{{ walletService.transactions().filter(t => t.type === 'debit').length }}</div>
+                  <div class="stat-value">{{ getTotalPurchases() }}</div>
                 </div>
               </div>
             </div>
