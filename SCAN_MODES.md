@@ -18,16 +18,18 @@ The Sales component now supports **two scanning modes** to provide flexibility w
 
 **How it works:**
 - Each scan adds exactly 1 item to cart
-- Keep scanning continuously
-- Different items? Just keep scanning!
+- Camera auto-closes after 800ms (time to see success message)
+- Click "Scan Item" again to scan next item
+- Clear feedback loop: scan → confirm → scan again
 - Fast and efficient for varied items
 
 **Example:**
 ```
-Scan: Apple → Cart: 1x Apple
-Scan: Banana → Cart: 1x Apple, 1x Banana  
-Scan: Apple → Cart: 2x Apple, 1x Banana
-Scan: Orange → Cart: 2x Apple, 1x Banana, 1x Orange
+Scan: Apple → Cart: 1x Apple → Camera closes ✅
+Click "Scan Item"
+Scan: Banana → Cart: 1x Apple, 1x Banana → Camera closes ✅
+Click "Scan Item"
+Scan: Apple → Cart: 2x Apple, 1x Banana → Camera closes ✅
 ```
 
 ### Quantity Mode (🔢)

@@ -93,9 +93,11 @@ export class SalesComponent {
       const qtyText = this.singleScanMode() ? '' : ` (x${quantityToAdd})`;
       this.showToast(`🛒 ${item.name}${qtyText} added to cart!`, 'success');
       
-      // Auto-close camera in single scan mode after successful add
+      // Auto-close camera in single scan mode after successful add (with small delay for feedback)
       if (this.singleScanMode()) {
-        this.stopScanning();
+        setTimeout(() => {
+          this.stopScanning();
+        }, 800); // 800ms delay to see success message
       }
     } else {
       this.soundService.playSound('error');
