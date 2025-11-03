@@ -5,6 +5,7 @@ import { SalesComponent } from './components/sales/sales.component';
 import { GameHeaderComponent } from './components/game-header/game-header.component';
 import { AchievementsComponent } from './components/achievements/achievements.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { SalesHistoryComponent } from './components/sales-history/sales-history.component';
 import { AppMode } from './models/inventory-item.model';
 import { GameService } from './services/game.service';
 
@@ -17,7 +18,8 @@ import { GameService } from './services/game.service';
     SalesComponent,
     GameHeaderComponent,
     AchievementsComponent,
-    SettingsComponent
+    SettingsComponent,
+    SalesHistoryComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

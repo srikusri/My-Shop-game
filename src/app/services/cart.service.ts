@@ -1,7 +1,8 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { CartItem, InventoryItem, Sale } from '../models/inventory-item.model';
 import { StorageService } from './storage.service';
 import { InventoryService } from './inventory.service';
+import { SalesHistoryService } from './sales-history.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class CartService {
   cartTotal = computed(() => 
     this.cartSignal().reduce((sum, item) => sum + (item.item.price * item.quantity), 0)
   );
+
+  private salesHistoryService = inject(SalesHistoryService);
 
   constructor(
     private storageService: StorageService,
@@ -114,8 +117,8 @@ export class CartService {
       timestamp: new Date()
     };
 
-    // Save sale
-    this.storageService.saveSale(sale);
+    // Save sale to history
+    this.salesHistoryService.addSale(sale);
 
     // Clear cart
     this.clearCart();
