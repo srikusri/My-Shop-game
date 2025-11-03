@@ -34,8 +34,17 @@ import * as QRCode from 'qrcode';
 
             @if (!paymentComplete()) {
               <div class="confirm-payment-section">
-                <button class="btn btn-success btn-large confirm-btn" (click)="confirmPayment()">
-                  ✓ Confirm Payment Received
+                <button 
+                  class="btn btn-success btn-large confirm-btn" 
+                  (click)="confirmPayment()"
+                  [disabled]="processing()"
+                  [class.processing]="processing()">
+                  @if (processing()) {
+                    <span class="spinner-small"></span>
+                    <span>Processing...</span>
+                  } @else {
+                    <span>✓ Confirm Payment Received</span>
+                  }
                 </button>
                 <p class="confirm-note">Click after buyer completes payment</p>
               </div>
@@ -174,9 +183,35 @@ import * as QRCode from 'qrcode';
       transition: all 0.3s;
     }
 
-    .confirm-btn:hover {
+    .confirm-btn:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(86, 171, 47, 0.4);
+    }
+
+    .confirm-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .confirm-btn.processing {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .spinner-small {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     .confirm-note {
@@ -305,6 +340,7 @@ export class QrPaymentComponent {
   amount = signal(0);
   paymentComplete = signal(false);
   receivedAmount = signal(0);
+  processing = signal(false);
 
   private _saleId = '';
 
@@ -328,6 +364,7 @@ export class QrPaymentComponent {
     // Reset payment status
     this.paymentComplete.set(false);
     this.receivedAmount.set(0);
+    this.processing.set(false);
   }
 
   private async generateQRCode(request: PaymentRequest): Promise<void> {
@@ -362,6 +399,14 @@ export class QrPaymentComponent {
   }
 
   confirmPayment(): void {
+    // Prevent double-click
+    if (this.processing() || this.paymentComplete()) {
+      return;
+    }
+    
+    // Set processing to disable button
+    this.processing.set(true);
+    
     // Manual confirmation by seller - directly credit wallet
     const amount = this.amount();
     const success = this.walletService.confirmManualPayment(amount);
@@ -374,6 +419,9 @@ export class QrPaymentComponent {
       setTimeout(() => {
         this.close();
       }, 2000);
+    } else {
+      // If failed, reset processing so user can try again
+      this.processing.set(false);
     }
   }
 
@@ -392,6 +440,7 @@ export class QrPaymentComponent {
     // Reset payment status when closing
     this.paymentComplete.set(false);
     this.receivedAmount.set(0);
+    this.processing.set(false);
   }
 }
 
