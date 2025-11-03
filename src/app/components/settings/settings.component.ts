@@ -1,13 +1,15 @@
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { GameService } from '../../services/game.service';
 import { InventoryService } from '../../services/inventory.service';
 import { SoundService } from '../../services/sound.service';
+import { CurrencyService } from '../../services/currency.service';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   template: `
     <button class="settings-icon-btn" (click)="showModal = true" title="Settings">
       ⚙️
@@ -31,6 +33,27 @@ import { SoundService } from '../../services/sound.service';
                   (click)="toggleSound()">
                   {{ gameService.soundEnabled() ? '🔊 On' : '🔇 Off' }}
                 </button>
+              </div>
+            </div>
+
+            <div class="settings-section">
+              <h3>💱 Currency</h3>
+              <div class="setting-item">
+                <label for="currency-select" class="currency-label">
+                  <span class="label-text">Select your currency:</span>
+                  <span class="current-currency">{{ currencyService.currency().symbol }} {{ currencyService.currency().code }}</span>
+                </label>
+                <select 
+                  id="currency-select"
+                  class="currency-select"
+                  [value]="currencyService.currencyCode()"
+                  (change)="onCurrencyChange($any($event.target).value)">
+                  @for (currency of currencyService.availableCurrencies; track currency.code) {
+                    <option [value]="currency.code">
+                      {{ currency.symbol }} {{ currency.name }} ({{ currency.code }})
+                    </option>
+                  }
+                </select>
               </div>
             </div>
 
@@ -279,10 +302,58 @@ import { SoundService } from '../../services/sound.service';
       padding: 1rem;
       background: #f8f9fa;
       border-radius: 12px;
+      flex-wrap: wrap;
+      gap: 1rem;
 
       span {
         font-weight: 500;
         color: #333;
+      }
+    }
+
+    .currency-label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+
+      .label-text {
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .current-currency {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #28a745;
+      }
+    }
+
+    .currency-select {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        border-color: #667eea;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      option {
+        padding: 0.5rem;
       }
     }
 
@@ -502,13 +573,19 @@ export class SettingsComponent {
   constructor(
     public gameService: GameService,
     public inventoryService: InventoryService,
-    private soundService: SoundService
+    private soundService: SoundService,
+    public currencyService: CurrencyService
   ) {}
 
   toggleSound(): void {
     this.gameService.toggleSound();
     this.soundService.setEnabled(this.gameService.soundEnabled());
     this.soundService.playSound('click');
+  }
+
+  onCurrencyChange(currencyCode: string): void {
+    this.currencyService.setCurrency(currencyCode);
+    this.soundService.playSound('success');
   }
 
   unlockedAchievements(): number {

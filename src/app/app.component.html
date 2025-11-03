@@ -82,7 +82,7 @@
                 <div class="stat-icon">💰</div>
                 <div class="stat-content">
                   <div class="stat-label">Wallet Balance</div>
-                  <div class="stat-value">\${{ walletService.balance().toFixed(2) }}</div>
+                  <div class="stat-value">{{ walletService.balance() | currencyFormat }}</div>
                 </div>
               </div>
               

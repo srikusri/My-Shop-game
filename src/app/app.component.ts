@@ -8,6 +8,7 @@ import { SalesHistoryComponent } from './components/sales-history/sales-history.
 import { PersonaSelectionComponent } from './components/persona-selection/persona-selection.component';
 import { WalletDisplayComponent } from './components/wallet-display/wallet-display.component';
 import { QrScannerPaymentComponent } from './components/qr-scanner-payment/qr-scanner-payment.component';
+import { CurrencyFormatPipe } from './pipes/currency-format.pipe';
 import { AppMode } from './models/inventory-item.model';
 import { GameService } from './services/game.service';
 import { WalletService } from './services/wallet.service';
@@ -25,7 +26,8 @@ import { PersonaType } from './models/wallet.model';
     SalesHistoryComponent,
     PersonaSelectionComponent,
     WalletDisplayComponent,
-    QrScannerPaymentComponent
+    QrScannerPaymentComponent,
+    CurrencyFormatPipe
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

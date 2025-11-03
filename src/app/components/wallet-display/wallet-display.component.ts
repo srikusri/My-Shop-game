@@ -3,16 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WalletService } from '../../services/wallet.service';
 import { PersonaType } from '../../models/wallet.model';
+import { CurrencyFormatPipe } from '../../pipes/currency-format.pipe';
 
 @Component({
   selector: 'app-wallet-display',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CurrencyFormatPipe],
   template: `
     <div class="wallet-container">
       <button class="wallet-button" (click)="showModal.set(true)">
         <span class="wallet-icon">💰</span>
-        <span class="wallet-balance">\${{ walletService.balance().toFixed(2) }}</span>
+        <span class="wallet-balance">{{ walletService.balance() | currencyFormat }}</span>
       </button>
 
         @if (showModal()) {
@@ -27,7 +28,7 @@ import { PersonaType } from '../../models/wallet.model';
                 <!-- Balance Card -->
                 <div class="balance-card">
                   <div class="balance-label">Current Balance</div>
-                  <div class="balance-amount">\${{ walletService.balance().toFixed(2) }}</div>
+                  <div class="balance-amount">{{ walletService.balance() | currencyFormat }}</div>
                   <div class="persona-badge" [class.seller]="isSeller()" [class.buyer]="isBuyer()">
                     {{ isSeller() ? '🏪 Seller' : '🛍️ Buyer' }}
                   </div>
@@ -81,7 +82,7 @@ import { PersonaType } from '../../models/wallet.model';
                           </div>
                           <div class="transaction-amount" [class.positive]="transaction.type === 'credit' || transaction.type === 'load'"
                                [class.negative]="transaction.type === 'debit'">
-                            {{ transaction.type === 'debit' ? '-' : '+' }}\${{ transaction.amount.toFixed(2) }}
+                            {{ transaction.type === 'debit' ? '-' : '+' }}{{ transaction.amount | currencyFormat }}
                           </div>
                         </div>
                       }
