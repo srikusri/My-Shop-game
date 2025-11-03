@@ -8,12 +8,11 @@
     <header class="app-header">
       <div class="header-content">
         <div class="logo">
-          <h1 class="rainbow-text">🏪 My Store Manager Game!</h1>
           @if (walletService.persona()) {
             <div class="persona-info">
               <span class="persona-badge" [class.seller]="walletService.persona()?.type === PersonaType.SELLER"
                     [class.buyer]="walletService.persona()?.type === PersonaType.BUYER">
-                {{ walletService.persona()?.type === PersonaType.SELLER ? '🏪 Seller' : '🛍️ Buyer' }}
+                {{ walletService.persona()?.type === PersonaType.SELLER ? 'Seller' : 'Buyer' }}
               </span>
               <span class="persona-name">{{ walletService.persona()?.name }}</span>
             </div>

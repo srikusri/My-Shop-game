@@ -14,7 +14,11 @@ import { PersonaType } from '../../models/wallet.model';
         <div class="persona-modal">
           <div class="persona-header">
             <h1>👋 Welcome to My Shop Game!</h1>
-            <p>{{ selectedType() ? 'What\'s your name?' : 'Choose how you want to play' }}</p>
+            @if (selectedType()) {
+              <p>What's your name?</p>
+            } @else {
+              <p>Choose how you want to play</p>
+            }
           </div>
 
           @if (!selectedType()) {
