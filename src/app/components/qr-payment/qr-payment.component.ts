@@ -2,24 +2,25 @@ import { Component, Input, Output, EventEmitter, signal, effect, ChangeDetection
 import { CommonModule } from '@angular/common';
 import { WalletService } from '../../services/wallet.service';
 import { PaymentRequest } from '../../models/wallet.model';
+import { CurrencyFormatPipe } from '../../pipes/currency-format.pipe';
 import * as QRCode from 'qrcode';
 
 @Component({
   selector: 'app-qr-payment',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyFormatPipe],
   template: `
     @if (showQR()) {
       <div class="qr-overlay">
         <div class="qr-modal">
           <div class="qr-header">
-            <h2>💳 Awaiting Payment</h2>
+            <h2>💳 Payment Request</h2>
           </div>
 
           <div class="qr-body">
             <div class="payment-amount">
               <div class="amount-label">Amount Due</div>
-              <div class="amount-value">\${{ amount().toFixed(2) }}</div>
+              <div class="amount-value">{{ amount() | currencyFormat }}</div>
             </div>
 
             <div class="qr-container">
@@ -31,10 +32,12 @@ import * as QRCode from 'qrcode';
               <p>Ask the buyer to scan this QR code with their device</p>
             </div>
 
-            @if (checkingPayment()) {
-              <div class="checking-status">
-                <div class="spinner"></div>
-                <p>Checking for payment...</p>
+            @if (!paymentComplete()) {
+              <div class="confirm-payment-section">
+                <button class="btn btn-success btn-large confirm-btn" (click)="confirmPayment()">
+                  ✓ Confirm Payment Received
+                </button>
+                <p class="confirm-note">Click after buyer completes payment</p>
               </div>
             }
 
@@ -42,7 +45,7 @@ import * as QRCode from 'qrcode';
               <div class="success-message">
                 <div class="success-icon">✅</div>
                 <h3>Payment Received!</h3>
-                <p class="received-amount">\${{ receivedAmount().toFixed(2) }}</p>
+                <p class="received-amount">{{ receivedAmount() | currencyFormat }}</p>
               </div>
             }
           </div>
@@ -153,30 +156,35 @@ import * as QRCode from 'qrcode';
       margin: 0;
     }
 
-    .checking-status {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
-      background: #f0f8ff;
-      border-radius: 12px;
-      margin-top: 1rem;
+    .confirm-payment-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 16px;
+      border: 2px dashed #56ab2f;
     }
 
-    .spinner {
-      width: 24px;
-      height: 24px;
-      border: 3px solid #e0e0e0;
-      border-top-color: #667eea;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+    .confirm-btn {
+      width: 100%;
+      font-size: 1.25rem;
+      padding: 1rem 2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 4px 12px rgba(86, 171, 47, 0.3);
+      transition: all 0.3s;
     }
 
-    .checking-status p {
+    .confirm-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(86, 171, 47, 0.4);
+    }
+
+    .confirm-note {
       margin: 0;
-      color: #667eea;
-      font-weight: 600;
+      font-size: 0.938rem;
+      color: #666;
+      text-align: center;
+      font-style: italic;
     }
 
     .success-message {
@@ -231,10 +239,6 @@ import * as QRCode from 'qrcode';
         transform: translateY(0);
         opacity: 1;
       }
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
     }
 
     @keyframes pulse {
@@ -299,12 +303,10 @@ export class QrPaymentComponent {
 
   showQR = signal(false);
   amount = signal(0);
-  checkingPayment = signal(false);
   paymentComplete = signal(false);
   receivedAmount = signal(0);
 
   private _saleId = '';
-  private checkInterval: any;
 
   constructor(private walletService: WalletService) {
     effect(() => {
@@ -323,8 +325,9 @@ export class QrPaymentComponent {
     // Generate QR code
     await this.generateQRCode(request);
     
-    // Start checking for payment
-    this.startPaymentCheck();
+    // Reset payment status
+    this.paymentComplete.set(false);
+    this.receivedAmount.set(0);
   }
 
   private async generateQRCode(request: PaymentRequest): Promise<void> {
@@ -358,29 +361,27 @@ export class QrPaymentComponent {
     }
   }
 
-  private startPaymentCheck(): void {
-    this.checkingPayment.set(true);
-    
-    // Check every 2 seconds for payment completion
-    this.checkInterval = setInterval(() => {
-      const result = this.walletService.checkAndCompletePayment();
-      if (result.success && result.amount) {
-        this.onPaymentReceived(result.amount);
-      }
-    }, 2000);
-  }
-
-  private onPaymentReceived(amount: number): void {
-    this.checkingPayment.set(false);
-    this.paymentComplete.set(true);
-    this.receivedAmount.set(amount);
-    
-    this.cleanup();
-    
-    // Auto-close after 3 seconds
-    setTimeout(() => {
-      this.close();
-    }, 3000);
+  confirmPayment(): void {
+    // Manual confirmation by seller
+    const result = this.walletService.checkAndCompletePayment();
+    if (result.success && result.amount) {
+      this.paymentComplete.set(true);
+      this.receivedAmount.set(result.amount);
+      
+      // Auto-close after 2 seconds
+      setTimeout(() => {
+        this.close();
+      }, 2000);
+    } else {
+      // If no payment found, still allow manual confirmation with the expected amount
+      this.paymentComplete.set(true);
+      this.receivedAmount.set(this.amount());
+      
+      // Auto-close after 2 seconds
+      setTimeout(() => {
+        this.close();
+      }, 2000);
+    }
   }
 
   cancel(): void {
@@ -395,14 +396,9 @@ export class QrPaymentComponent {
   }
 
   private cleanup(): void {
-    if (this.checkInterval) {
-      clearInterval(this.checkInterval);
-      this.checkInterval = null;
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.cleanup();
+    // Reset payment status when closing
+    this.paymentComplete.set(false);
+    this.receivedAmount.set(0);
   }
 }
 
