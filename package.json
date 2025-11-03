@@ -6,12 +6,12 @@
     "ng": "ng",
     "start": "ng serve --port 8080",
     "build": "ng build --configuration production",
-    "build:gh-pages": "ng build --configuration production --base-href=/Inventory-SPA/",
+    "build:gh-pages": "ng build --configuration production --base-href=/My-Shop-game/",
     "build:pwa": "ng build --configuration production && npm run generate-sw",
     "generate-sw": "ngsw-config dist/inventory-spa ngsw-config.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "npm run build:gh-pages && npx angular-cli-ghpages --dir=dist/inventory-spa"
+    "deploy": "npm run build:gh-pages && npx angular-cli-ghpages --dir=dist/inventory-spa --repo=https://github.com/srikusri/My-Shop-game.git"
   },
   "private": true,
   "keywords": [
