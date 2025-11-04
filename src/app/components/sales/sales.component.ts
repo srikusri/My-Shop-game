@@ -150,6 +150,8 @@ export class SalesComponent {
       this.showToast('Cart is empty!', 'error');
       return;
     }
+    // Reset completed sale when starting new checkout
+    this.completedSale.set(null);
     this.showCheckoutModal.set(true);
   }
 
@@ -171,6 +173,8 @@ export class SalesComponent {
   }
 
   onPaymentReceived(amount: number): void {
+    console.log('Payment received, amount:', amount); // Debug log
+    
     // Complete the sale after payment received
     const sale = this.cartService.finalizeSale();
     
@@ -180,10 +184,14 @@ export class SalesComponent {
       this.soundService.playSound('levelUp');
       const formattedAmount = this.currencyService.format(amount);
       this.showToast(`🎉 Payment received! ${formattedAmount} added to wallet!`, 'success');
+      
+      // Close QR payment modal and show receipt in checkout modal
       this.showQRPayment.set(false);
+      this.showCheckoutModal.set(true);
     } else {
       this.soundService.playSound('error');
       this.showToast('😕 Oops! Something went wrong!', 'error');
+      this.showQRPayment.set(false);
     }
   }
 
@@ -213,6 +221,7 @@ export class SalesComponent {
 
   startNewSale(): void {
     this.completedSale.set(null);
+    this.showQRPayment.set(false); // Ensure QR modal is closed
     this.closeCheckoutModal();
   }
 

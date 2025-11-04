@@ -434,9 +434,13 @@ export class QrPaymentComponent {
   close(): void {
     // Store amount before any cleanup can reset it
     const finalAmount = this.receivedAmount();
-    this.showQR.set(false);
-    // Emit after setting showQR to false to ensure cleanup doesn't interfere
+    console.log('QR Payment closing, emitting amount:', finalAmount); // Debug log
+    
+    // Emit BEFORE setting showQR to false to ensure parent gets correct amount
     this.paymentCompleted.emit(finalAmount);
+    
+    // Now close (this will trigger cleanup)
+    this.showQR.set(false);
   }
 
   private cleanup(): void {
